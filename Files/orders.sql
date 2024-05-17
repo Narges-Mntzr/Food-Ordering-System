@@ -4,7 +4,9 @@ CREATE TABLE orders (
     date_time DATETIME DEFAULT CURRENT_TIMESTAMP,
     status VARCHAR(10) DEFAULT 'pending' CHECK (status IN ('canceled', 'pending', 'success')),
     delivery_courier_id INT NULL,
-    FOREIGN KEY (delivery_courier_id) REFERENCES deliveryCourier(id)
+    restaurant_id int NULL,
+    FOREIGN KEY (delivery_courier_id) REFERENCES deliveryCourier(id),
+    FOREIGN KEY (restaurant_id) REFERENCES restaurant(id)
 );
 
 
