@@ -1,7 +1,7 @@
 create table discount (
 discount_code int not null,
 amount int null,
-type varchar(10) null check ( status in ('percent', 'cash')),
+type varchar(10) null check ( type in ('percent', 'cash')),
 expire_time datetime null,
 primary key(discount_code)
 );
