@@ -24,7 +24,58 @@ VALUES
     (10009, GETDATE(), 'success', 5),
     (10010, GETDATE(), 'success', 5);
 
+-------------------------------------------------------------------------------
+-- functions 
+CREATE FUNCTION CalculateOrderTotalPrice (@order_number INT)
+RETURNS DECIMAL(10, 2)
+AS
+BEGIN
+    DECLARE @total_price DECIMAL(10, 2);
+
+    SELECT @total_price = SUM(od.quantity * f.price)
+    FROM orderDetail od
+    INNER JOIN food f ON od.food_id = f.id
+    WHERE od.order_number = @order_number;
+
+    RETURN @total_price;
+END;
+
+-------------------------------------------------------------------------------
+-- triggers 
+CREATE TRIGGER CheckOrderStatusBeforeAssignCourier
+ON orders
+AFTER UPDATE
+AS
+BEGIN
+    IF UPDATE(delivery_courier_id)
+    BEGIN
+        DECLARE @order_number INT;
+        DECLARE @status VARCHAR(10);
+
+        SELECT @order_number = inserted.order_number,
+               @status = inserted.status
+        FROM inserted;
+
+        IF @status <> 'success'
+        BEGIN
+            RAISERROR ('Cannot assign delivery courier to order with status other than "success".', 16, 1);
+            ROLLBACK TRANSACTION;
+            RETURN;
+        END;
+    END;
+END;
+
+-- test CheckOrderStatusBeforeAssignCourier trigger
+-- Raise error
+UPDATE orders
+SET delivery_courier_id = 1
+WHERE order_number = 10001;
+
+-- Changed successfully
+UPDATE orders
+SET delivery_courier_id = 4
+WHERE order_number = 10007;
 
 -------------------------------------------------------------------------------
 -- select table
-SELECT * FROM orders;
+SELECT *, dbo.CalculateOrderTotalPrice(order_number) AS total_price FROM orders;

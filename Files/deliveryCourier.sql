@@ -21,5 +21,59 @@ VALUES
 
 
 -------------------------------------------------------------------------------
+-- functions 
+CREATE FUNCTION CalculateDeliveryTime (@courier_id INT)
+RETURNS INT
+AS
+BEGIN
+    DECLARE @delivery_time INT;
+
+    SELECT @delivery_time = DATEDIFF(MINUTE, start_time, end_time)
+    FROM deliveryCourier
+    WHERE id = @courier_id;
+
+    RETURN @delivery_time;
+END;
+
+-------------------------------------------------------------------------------
+-- triggers 
+CREATE TRIGGER CheckPendingDeliveryCourier
+ON deliveryCourier
+INSTEAD OF INSERT
+AS
+BEGIN
+    IF EXISTS (
+        SELECT 1
+        FROM inserted i
+        JOIN deliveryCourier AS dc ON i.driver_id = dc.driver_id
+        WHERE dc.status <> 'finished'
+    )
+    BEGIN
+        RAISERROR ('Driver already has a pending delivery.', 16, 1);
+        ROLLBACK TRANSACTION;
+        RETURN;
+    END;
+    ELSE
+    BEGIN
+        INSERT INTO deliveryCourier (driver_id, start_time, end_time, status)
+        SELECT driver_id, start_time, end_time, status
+        FROM inserted;
+    END;
+END;
+
+-- test CheckPendingDeliveryCourier trigger
+-- Raise error
+INSERT INTO deliveryCourier 
+    (start_time, driver_id)
+VALUES
+    ('2024-05-17 10:30:00', 1);
+-- Changed successfully
+INSERT INTO deliveryCourier 
+    (start_time, driver_id)
+VALUES
+    ('2024-05-17 10:30:00', 3);
+
+-------------------------------------------------------------------------------
 -- select table
-SELECT * FROM deliveryCourier;
+SELECT *, dbo.CalculateDeliveryTime(id) AS DeliveryTimeInMinutes
+FROM deliveryCourier;

@@ -26,5 +26,33 @@ VALUES
     (10010, 49900, '0123-4567-8901-2345', 'success');  
 
 -------------------------------------------------------------------------------
+-- triggers 
+CREATE TRIGGER UpdateOrderStatus
+ON payment
+AFTER INSERT
+AS
+BEGIN
+    DECLARE @order_number INT;
+    DECLARE @status VARCHAR(10);
+
+    SELECT @order_number = inserted.order_number,
+           @status = inserted.status
+    FROM inserted;
+
+    IF @status = 'success'
+    BEGIN
+        UPDATE orders
+        SET status = 'success'
+        WHERE order_number = @order_number;
+    END;
+END;
+
+-- test UpdateOrderStatus trigger
+INSERT INTO payment 
+    (order_number, price, card_number, status)
+VALUES
+    (10007, 10900, '1234-5678-9012-3456', 'success');
+
+-------------------------------------------------------------------------------
 -- select table
 SELECT * FROM payment;
