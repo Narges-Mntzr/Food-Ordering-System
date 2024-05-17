@@ -13,18 +13,18 @@ CREATE TABLE orders (
 -------------------------------------------------------------------------------
 -- insert data
 INSERT INTO orders 
-    (order_number, date_time, status, delivery_courier_id)
+    (order_number, date_time, status, delivery_courier_id, restaurant_id)
 VALUES
-    (10001, DATEADD(DAY, -3, GETDATE()), 'canceled', NULL),
-    (10002, DATEADD(DAY, -2, GETDATE()), 'success', 1),
-    (10003, DATEADD(DAY, -2, GETDATE()), 'success', 2),
-    (10004, DATEADD(DAY, -2, GETDATE()), 'success', 3),
-    (10005, DATEADD(DAY, -1, GETDATE()), 'canceled', NULL),
-    (10006, GETDATE(), 'success', 4),
-    (10007, GETDATE(), 'pending', NULL),
-    (10008, GETDATE(), 'pending', NULL),
-    (10009, GETDATE(), 'success', 5),
-    (10010, GETDATE(), 'success', 5);
+    (10001, DATEADD(DAY, -3, GETDATE()), 'canceled', NULL , 101),
+    (10002, DATEADD(DAY, -2, GETDATE()), 'success', 1 , 102),
+    (10003, DATEADD(DAY, -2, GETDATE()), 'success', 2 , 102),
+    (10004, DATEADD(DAY, -2, GETDATE()), 'success', 3 , 103),
+    (10005, DATEADD(DAY, -1, GETDATE()), 'canceled', NULL , 101),
+    (10006, GETDATE(), 'success', 4 , 103),
+    (10007, GETDATE(), 'pending', NULL , 101),
+    (10008, GETDATE(), 'pending', NULL , 101),
+    (10009, GETDATE(), 'success', 5 , 101),
+    (10010, GETDATE(), 'success', 5 , 101);
 
 -------------------------------------------------------------------------------
 -- functions 
