@@ -30,11 +30,11 @@ BEGIN
     SELECT @car_tag = inserted.car_tag
     FROM inserted;
 
-    SELECT @car_tag_valid  = check_nat_code(@car_tag)
+    SELECT @car_tag_valid  = validate_car_tag(@car_tag)
 
     IF @car_tag_valid = 0
         BEGIN
-            RAISERROR ('Invalid nat_code: %s', 16, 1, (SELECT car_tag FROM inserted));
+            RAISERROR ('Invalid car tag: %s', 16, 1, (SELECT car_tag FROM inserted));
         END
     ELSE
         BEGIN
