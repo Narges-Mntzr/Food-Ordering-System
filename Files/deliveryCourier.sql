@@ -8,6 +8,7 @@ CREATE TABLE deliveryCourier (
     FOREIGN KEY (driver_id) REFERENCES driver(user_id)
 );
 
+select * from driver
 -------------------------------------------------------------------------------
 -- insert data
 INSERT INTO deliveryCourier 

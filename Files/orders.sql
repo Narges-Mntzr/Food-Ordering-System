@@ -1,3 +1,5 @@
+drop table orders
+
 -- create orders table
 CREATE TABLE orders (
     order_number INT PRIMARY KEY,
@@ -5,6 +7,8 @@ CREATE TABLE orders (
     status VARCHAR(10) DEFAULT 'pending' CHECK (status IN ('canceled', 'pending', 'success')),
     delivery_courier_id INT NULL,
     restaurant_id int NULL,
+	discount_id int null,
+	FOREIGN KEY (discount_id) REFERENCES discount(discount_code),
     FOREIGN KEY (delivery_courier_id) REFERENCES deliveryCourier(id),
     FOREIGN KEY (restaurant_id) REFERENCES restaurant(id)
 );
@@ -15,17 +19,19 @@ CREATE TABLE orders (
 INSERT INTO orders 
     (order_number, date_time, status, delivery_courier_id, restaurant_id)
 VALUES
-    (10001, DATEADD(DAY, -3, GETDATE()), 'canceled', NULL , 101),
-    (10002, DATEADD(DAY, -2, GETDATE()), 'success', 1 , 102),
-    (10003, DATEADD(DAY, -2, GETDATE()), 'success', 2 , 102),
-    (10004, DATEADD(DAY, -2, GETDATE()), 'success', 3 , 103),
-    (10005, DATEADD(DAY, -1, GETDATE()), 'canceled', NULL , 101),
-    (10006, GETDATE(), 'success', 4 , 103),
-    (10007, GETDATE(), 'pending', NULL , 101),
-    (10008, GETDATE(), 'pending', NULL , 101),
-    (10009, GETDATE(), 'success', 5 , 101),
-    (10010, GETDATE(), 'success', 5 , 101);
+    (10001, DATEADD(DAY, -3, GETDATE()), 'canceled', 3 , 1),
+    (10002, DATEADD(DAY, -2, GETDATE()), 'success', 4 , 2),
+    (10003, DATEADD(DAY, -2, GETDATE()), 'success', 5 , 2),
+    (10004, DATEADD(DAY, -2, GETDATE()), 'success', 3 , 3),
+    (10005, DATEADD(DAY, -1, GETDATE()), 'canceled', 3 , 1),
+    (10006, GETDATE(), 'success', 4 , 3),
+    (10007, GETDATE(), 'pending', 3 , 1),
+    (10008, GETDATE(), 'pending', 3 , 1),
+    (10009, GETDATE(), 'success', 5 , 1),
+    (10010, GETDATE(), 'success', 5 , 1);
 
+
+drop function CalculateOrderTotalPrice
 -------------------------------------------------------------------------------
 -- functions 
 CREATE FUNCTION CalculateOrderTotalPrice (@order_number INT)
@@ -34,11 +40,22 @@ AS
 BEGIN
     DECLARE @total_price DECIMAL(10, 2);
 
+	DECLARE @dis_id int;
+
     SELECT @total_price = SUM(od.quantity * f.price)
     FROM orderDetail od
     INNER JOIN food f ON od.food_id = f.id
     WHERE od.order_number = @order_number;
 
+	select @dis_id = discount_id
+	from orders
+	where order_number = @order_number
+
+	if (@dis_id <> null )
+		if ( (select [type] from discount where discount_code = @dis_id) = 'cash') 
+			set @total_price = @total_price - (select amount from discount where discount_code = @dis_id)
+		else 
+			set @total_price = (1 - (select amount from discount where discount_code = @dis_id / 100)) * @total_price
     RETURN @total_price;
 END;
 
@@ -70,7 +87,7 @@ END;
 -- test CheckOrderStatusBeforeAssignCourier trigger
 -- Raise error
 UPDATE orders
-SET delivery_courier_id = 1
+SET delivery_courier_id = 5
 WHERE order_number = 10001;
 
 -- Changed successfully

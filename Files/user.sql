@@ -1,6 +1,7 @@
+drop table users
 -- create
 CREATE TABLE users (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    id INT PRIMARY KEY identity(1,1),
     password VARCHAR(255) NOT NULL,
     name VARCHAR(100) NOT NULL,
     phone_num VARCHAR(20),

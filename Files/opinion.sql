@@ -1,5 +1,7 @@
+drop table opinion
+
 create table opinion (
-opinion_id int not null,
+opinion_id int not null identity(1,1),
 user_id int not null,
 restaurant_id int not null,
 score int check (score>0 and score<=5),
@@ -10,15 +12,17 @@ foreign key (restaurant_id) references restaurant(id)
 );
 
 INSERT INTO opinion 
-    (opinion_id, user_id, restaurant_id, score, text)
+    ( user_id, restaurant_id, score, text)
 VALUES
-    (11, 1, 101, 5, 'perfect'),
-    (22, 2, 102, 3 , 'not bad'),
-    (33, 3, 103, 2, 'bad')
+    ( 1, 1, 5, 'perfect'),
+    ( 2, 3, 3 , 'not bad'),
+    ( 3, 2, 2, 'bad')
+
 
 --drop function restaurant_opinions
 create function restaurant_opinions (@restaurant_id int)
 returns @ReturnTable table(
+
 	restaurant_id int NOT NULL,
 	text varchar(100) null,
 	user_id int
@@ -32,5 +36,16 @@ Where @restaurant_id = restaurant_id
 RETURN;
 END;  
 
+-- drop view get_avg_rate
+create view get_avg_rate as
+select restaurant_id , avg(score) as avg_rate 
+from opinion
+group by restaurant_id
+
+
+select * from get_avg_rate 
+order by avg_rate desc
+
+
 SELECT *
-FROM restaurant_opinions(101)
+FROM restaurant_opinions(2)

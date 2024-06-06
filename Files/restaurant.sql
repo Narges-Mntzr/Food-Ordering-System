@@ -1,5 +1,7 @@
+drop table restaurant
+
 create table restaurant (
-id int not null,
+id int not null identity(1,1),
 name varchar(20) not null,
 create_time datetime null,
 address varchar(50),
@@ -7,11 +9,11 @@ primary key(id)
 );
 
 INSERT INTO restaurant 
-    (id, name, create_time, address)
+    ( name, create_time, address)
 VALUES
-    (101, 'shahrzad', '2008-11-09 15:45:21', 'chaharbagh'),
-    (102, 'aseman', '2018-10-2 11:45:20', 'sanaati'),
-    (103, 'pizapiza', '2015-12-01 14:02:20', 'sepahanshahr');
+    ('shahrzad', '2008-11-09 15:45:21', 'chaharbagh'),
+    ('aseman', '2018-10-2 11:45:20', 'sanaati'),
+    ('pizapiza', '2015-12-01 14:02:20', 'sepahanshahr');
 
 
 CREATE VIEW restaurant_view AS
