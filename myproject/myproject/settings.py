@@ -75,19 +75,18 @@ WSGI_APPLICATION = "myproject.wsgi.application"
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'mssql',
-        'NAME': 'food_ordering_system',
-        'USER': 'sa',
-        'PASSWORD': 'nargesMntzr81',
-        'HOST': 'localhost',
-        'PORT': '1433',
-        'OPTIONS': {
-            'driver': 'ODBC Driver 17 for SQL Server',
+    "default": {
+        "ENGINE": "mssql",
+        "NAME": "food_ordering_system",
+        "USER": "sa",
+        "PASSWORD": "nargesMntzr81",
+        "HOST": "localhost",
+        "PORT": "1433",
+        "OPTIONS": {
+            "driver": "ODBC Driver 17 for SQL Server",
         },
     },
 }
-
 
 
 # Password validation
@@ -125,6 +124,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = "static/"
+STATICFILES_DIRS = [BASE_DIR / "static"]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field

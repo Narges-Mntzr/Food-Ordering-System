@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block title %}Addresses{% endblock %}
+
+{% block bodyHeader %}
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <h1 class="text-2xl font-semibold">Addresses</h1>
+            <a href="" class="block text-l font-semibold text-white"> 
+                <!-- #TODO: add main page url -->
+                Back
+            </a>
+        </div>
+    </header>
+{% endblock %}
+
+{% block content %}
+    <!-- Chat List -->
+    <div class="container">
+        <table class="table table-bordered">
+            <thead class="bg-gray-800 text-white p-4">
+                <tr>
+                    <th>Postal Code</th>
+                    <th>Title</th>
+                    <th>City</th>
+                    <th>Street</th>
+                    <th>Phone Number</th>
+                    <th>Latitude</th>
+                    <th>Longitude</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for adr in data %}
+                    <tr>
+                        <td>{{ adr.0 }}</td>
+                        <td>{{ adr.1 }}</td>
+                        <td>{{ adr.2 }}</td>
+                        <td>{{ adr.3 }}</td>
+                        <td>{{ adr.4 }}</td>
+                        <td>{{ adr.5 }}</td>
+                        <td>{{ adr.6 }}</td>
+                    </tr>
+                {% endfor %}
+                <tr class="add-row">
+                    <form method="post">{% csrf_token %}
+                        <td><input type="number" name="postal_code" class="form-control" placeholder="Postal Code"></td>
+                        <td><input type="text" name="title" class="form-control" placeholder="Title"></td>
+                        <td><input type="text" name="city" class="form-control" placeholder="City"></td>
+                        <td><input type="text" name="street" class="form-control" placeholder="Street"></td>
+                        <td><input type="text" name="phone_number" class="form-control" placeholder="Phone Number"></td>
+                        <td><input type="text" name="latitude" class="form-control" placeholder="Latitude"></td>
+                        <td><input type="text" name="longitude" class="form-control" placeholder="Longitude"></td>
+                        <td><button type="submit" class="btn btn-success">Add</button></td>
+                    </form>
+                </tr>
+            </tbody>
+        </table>
+        <div id="map"></div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script>
+        var map = L.map('map').setView([51.505, -0.09], 2);  // Default view centered globally
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 18,
+        }).addTo(map);
+
+        {% for adr in data %}
+            L.marker([{{ adr.5 }}, {{ adr.6 }}]).addTo(map)
+                .bindPopup('<b>{{ adr.1 }}</b><br>PostalCode: {{ adr.0 }}')
+                .openPopup();
+        {% endfor %}
+    </script>
+{% endblock %}
+
+{% block bodyFooter %}
+{% endblock %}

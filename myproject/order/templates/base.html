@@ -1,0 +1,54 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}ChatBot Maker{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <link rel="shortcut icon" type="image/png" href="{% static 'favIcon.ico' %}" >
+    <style>
+        table {
+            margin-top: 20px;
+        }
+        th, td {
+            text-align: center;
+        }
+        .add-row {
+            background-color: #f8f9fa;
+        }
+        #map {
+            height: 400px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+{% block body %}
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+        {% block bodyHeader %}
+        <div class="container mx-auto">
+            <a href="" class="block text-2xl font-semibold text-white mt-4">
+                Back to Chat History
+            </a>
+            <a href="" class="block text-l font-semibold text-white mb-4">
+                Log Out
+            </a>
+        </div>
+        {% endblock %}
+    </header>
+
+    <div id="content">
+        {% block content %}{% endblock %}
+    </div>
+
+    <footer>
+        {% block bodyFooter %}{% endblock %}
+    </footer>
+</body>
+{% endblock %}
+</html>
