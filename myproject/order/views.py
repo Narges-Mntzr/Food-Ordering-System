@@ -35,3 +35,26 @@ def address_view(request):
     data = run_query(query)
     context = {"data": data}
     return render(request, "address.html", context)
+
+
+def category_view(request):
+    if request.method == "POST":
+        data = request.POST
+
+        name = data.get("name")
+
+        try:
+            run_query(
+                """
+                INSERT INTO category (name) 
+                VALUES (%s)
+            """,
+                [name],
+            )
+        except Exception as e:
+            return JsonResponse({"error": str(e)}, status=500)
+
+    query = "SELECT id, name FROM category"
+    data = run_query(query)
+    context = {"data": data}
+    return render(request, "category.html", context)
