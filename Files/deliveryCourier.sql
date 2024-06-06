@@ -5,7 +5,7 @@ CREATE TABLE deliveryCourier (
     end_time DATETIME DEFAULT NULL,
     driver_id INT NOT NULL,
     status VARCHAR(10) DEFAULT 'pending' CHECK (status IN ('pending', 'started', 'finished')),
-    -- FOREIGN KEY (driver_id) REFERENCES driver(id)
+    FOREIGN KEY (driver_id) REFERENCES driver(user_id)
 );
 
 -------------------------------------------------------------------------------
