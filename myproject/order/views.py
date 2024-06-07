@@ -7,11 +7,11 @@ from django.shortcuts import render
 from .services import run_query
 
 
-def landing_view(request):
+def LandingView(request):
     return render(request, "landing.html")
 
 
-def address_view(request):
+def AddressView(request):
     if request.method == "POST":
         data = request.POST
 
@@ -44,7 +44,7 @@ def address_view(request):
     return render(request, "address.html", context)
 
 
-def category_view(request):
+def CategoryView(request):
     if request.method == "POST":
         data = request.POST
 
@@ -67,7 +67,7 @@ def category_view(request):
     return render(request, "category.html", context)
 
 
-def discount_view(request):
+def DiscountView(request):
     if request.method == "POST":
         data = request.POST
 
@@ -111,7 +111,7 @@ def discount_view(request):
     return render(request, "discount.html", context)
 
 
-def food_view(request):
+def FoodView(request):
     if request.method == "POST":
         data = request.POST
 
