@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}About Us{% endblock %}
+
+{% block bodyHeader %}
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <h1 class="text-2xl font-semibold">About Us</h1>
+            <a href="{% url 'order:landing' %}" class="block text-l font-semibold text-white"> 
+                Back
+            </a>
+        </div>
+    </header>
+{% endblock %}
+
+{% block content %}
+    <div class="container mt-10">
+        <h4>Welcome to our Online Food Ordering System! This platform is the result of a collaborative project undertaken in the Database Laboratory at Isfahan University of Technology.</h4>
+        <br />
+
+        <h4>Our team, consisting of <a href="https://github.com/shirinbehnami">Shirin Behnaminia</a>, <a href="https://github.com/sabzparto">Parto Sabzevari</a>, and <a href="https://github.com/Narges-Mntzr">Narges Montazeri</a>, has developed this system to streamline and enhance the food ordering process. The primary goal of this project is to apply our theoretical knowledge of database management in a practical setting, creating a functional and user-friendly application that meets modern requirements.</h4>
+        <br />
+
+        <h4>Through this project, we aimed to integrate various database techniques, ensuring efficient data handling and seamless user experiences. We hope our system demonstrates the potential of database applications in real-world scenarios, particularly in the food and beverage industry.</h4>
+        <br />
+
+        <h4>Thank you for visiting, and we hope you enjoy exploring our project!</h4>
+    </div>
+{% endblock %}
+
+{% block bodyFooter %}
+{% endblock %}

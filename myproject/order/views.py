@@ -10,6 +10,8 @@ from .services import run_query, sha256
 def LandingView(request):
     return render(request, "landing.html")
 
+def AboutUsView(request):
+    return render(request, "aboutus.html")
 
 def AddressView(request):
     if request.method == "POST":
