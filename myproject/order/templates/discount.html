@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+
+{% block title %}Discounts{% endblock %}
+
+{% block bodyHeader %}
+<header class="bg-gray-800 text-white p-4">
+    <div class="container mx-auto">
+        <h1 class="text-2xl font-semibold">Discounts</h1>
+        <a href="" class="block text-l font-semibold text-white">
+            <!-- #TODO: add main page url -->
+            Back
+        </a>
+    </div>
+</header>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="p-4 mb-4 rounded col-md-4">
+        <div class="container mx-auto flex items-center">
+            <input type="checkbox" id="dataSwitch" style="width: 20px;" class="form-control mr-2" onclick="switchData()">
+            <label for="dataSwitch" class="form-check-label text-lg">Display Available Discounts</label>
+        </div>
+    </div>
+    <table class="table table-bordered">
+        <thead class="bg-gray-800 text-white p-4">
+            <tr>
+                <th>Discount Code</th>
+                <th>Amount</th>
+                <th>Percent</th>
+                <th>Cash</th>
+                <th>Expire Time</th>
+            </tr>
+        </thead>
+        <tbody id="discountTable">
+            <!-- Data will be dynamically rendered here -->
+        </tbody>
+        <tbody>
+            <tr class="add-row">
+                <form method="post">
+                    {% csrf_token %}
+                    <td><input type="number" name="discount_code" class="form-control" placeholder="Discount Code" disabled></td>
+                    <td><input type="number" name="amount" class="form-control" placeholder="Amount"></td>
+                    <td><input type="checkbox" name="type" class="form-control" value="percent" onclick="onlyOne(this)"></td>
+                    <td><input type="checkbox" name="type" class="form-control" value="cash" onclick="onlyOne(this)"></td>
+                    <td><input type="datetime-local" name="expire_time" class="form-control"></td>
+                    <td><button type="submit" class="btn btn-success">Add</button></td>
+                </form>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<script>
+    var data = JSON.parse('{{ data|escapejs }}');
+    var availableData = JSON.parse('{{ available_data|escapejs }}');
+
+    function switchData() {
+        var useAvailableData = document.getElementById('dataSwitch').checked;
+        renderTable(useAvailableData);
+    }
+
+    function renderTable(useAvailableData) {
+        var tableBody = document.getElementById('discountTable');
+        tableBody.innerHTML = ''; // Clear previous content
+
+        var dataSet = useAvailableData ? availableData : data;
+
+        dataSet.forEach(function(discount) {
+            var row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${discount[0]}</td>
+                <td>${discount[1]}</td>
+                <td><input type="checkbox" class="form-control" ${discount[2] === 'percent' ? 'checked disabled' : 'disabled'}></td>
+                <td><input type="checkbox" class="form-control" ${discount[2] === 'cash' ? 'checked disabled' : 'disabled'}></td>
+                <td>${discount[3]}</td>
+            `;
+            tableBody.appendChild(row);
+        });
+    }
+
+    function onlyOne(checkbox) {
+        var checkboxes = document.getElementsByName('type');
+        checkboxes.forEach((item) => {
+            if (item !== checkbox) item.checked = false;
+        });
+    }
+
+    // Initial rendering
+    renderTable(false); // Render default data
+</script>
+{% endblock %}
+
+{% block bodyFooter %}
+{% endblock %}

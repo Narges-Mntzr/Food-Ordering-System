@@ -33,7 +33,7 @@
                 <tr class="add-row">
                     <form method="post">{% csrf_token %}
                         <td><input type="number" name="id" class="form-control" placeholder="ID" disabled></td>
-                        <td><input type="text" name="name" class="form-control" placeholder="Title"></td>
+                        <td><input type="text" name="name" class="form-control" placeholder="Title" required></td>
                         <td><button type="submit" class="btn btn-success">Add</button></td>
                     </form>
                 </tr>

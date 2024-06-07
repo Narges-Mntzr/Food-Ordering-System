@@ -42,11 +42,11 @@
                 {% endfor %}
                 <tr class="add-row">
                     <form method="post">{% csrf_token %}
-                        <td><input type="number" name="postal_code" class="form-control" placeholder="Postal Code"></td>
+                        <td><input type="number" name="postal_code" class="form-control" placeholder="Postal Code" required></td>
                         <td><input type="text" name="title" class="form-control" placeholder="Title"></td>
-                        <td><input type="text" name="city" class="form-control" placeholder="City"></td>
-                        <td><input type="text" name="street" class="form-control" placeholder="Street"></td>
-                        <td><input type="text" name="phone_number" class="form-control" placeholder="Phone Number"></td>
+                        <td><input type="text" name="city" class="form-control" placeholder="City" required></td>
+                        <td><input type="text" name="street" class="form-control" placeholder="Street" required></td>
+                        <td><input type="tel" name="phone_number" class="form-control" placeholder="Phone Number"></td>
                         <td><input type="text" name="latitude" class="form-control" placeholder="Latitude"></td>
                         <td><input type="text" name="longitude" class="form-control" placeholder="Longitude"></td>
                         <td><button type="submit" class="btn btn-success">Add</button></td>

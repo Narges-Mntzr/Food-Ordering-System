@@ -77,9 +77,9 @@ WSGI_APPLICATION = "myproject.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "mssql",
-        "NAME": "food_ordering_system",
+        "NAME": "master",
         "USER": "sa",
-        "PASSWORD": "nargesMntzr81",
+        "PASSWORD": "******",
         "HOST": "localhost",
         "PORT": "1433",
         "OPTIONS": {
