@@ -51,6 +51,17 @@
             </tbody>
         </table>
     </div>
+    <div class="btn-container">
+        <div class="btn-wrapper">
+            <a href="{% url 'order:customer' %}" class="btn btn-primary btn-custom-user ">Customer</a>
+        </div>
+        <div class="btn-wrapper">
+            <a href="{% url 'order:restaurant' %}" class="btn btn-primary btn-custom-user">Restaurant</a>
+        </div>
+        <div class="btn-wrapper">
+            <a href="{% url 'order:driver' %}" class="btn btn-primary btn-custom-user">Driver</a>
+        </div>
+    </div>
 {% endblock %}
 
 {% block bodyFooter %}

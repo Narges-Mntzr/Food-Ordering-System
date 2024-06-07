@@ -69,6 +69,31 @@ def CategoryView(request):
     return render(request, "category.html", context)
 
 
+def CustomerView(request):
+    if request.method == "POST":
+        data = request.POST
+
+        user_id = data.get("id")
+        nat_code = data.get("nat_code")
+        adr = data.get("adr")
+
+        try:
+            run_query(
+                """
+                INSERT INTO customer (user_id, nat_code, default_address)
+                VALUES (%s, %s, %s)
+            """,
+                [user_id, nat_code, adr],
+            )
+        except Exception as e:
+            return JsonResponse({"error": str(e)}, status=500)
+
+    query = "SELECT user_id, name, nat_code, phone_num, default_address FROM view_customer_info;"
+    data = run_query(query)
+    context = {"data": data}
+    return render(request, "customer.html", context)
+
+
 def DiscountView(request):
     if request.method == "POST":
         data = request.POST
@@ -112,6 +137,29 @@ def DiscountView(request):
     }
     return render(request, "discount.html", context)
 
+def DriverView(request):
+    if request.method == "POST":
+        data = request.POST
+
+        user_id = data.get("id")
+        car_tag = data.get("car_tag")
+
+        try:
+            run_query(
+                """
+                INSERT INTO driver (user_id, car_tag)
+                VALUES (%s, %s)
+            """,
+                [user_id, car_tag],
+            )
+        except Exception as e:
+            return JsonResponse({"error": str(e)}, status=500)
+
+    query = "SELECT user_id, name, car_tag, phone_num FROM view_driver_info;"
+    data = run_query(query)
+    context = {"data": data}
+    return render(request, "driver.html", context)
+
 
 def FoodView(request):
     if request.method == "POST":
@@ -143,6 +191,30 @@ def FoodView(request):
 
     context = {"data": data, "categories": categories}
     return render(request, "food.html", context)
+
+def RestaurantView(request):
+    if request.method == "POST":
+        data = request.POST
+
+        name = data.get("name")
+        create_time = data.get("create_time")
+        adr = data.get("adr")
+
+        try:
+            run_query(
+                """
+                INSERT INTO restaurant ( name, create_time, address)
+                VALUES (%s, %s, %s)
+            """,
+                [name, create_time, adr],
+            )
+        except Exception as e:
+            return JsonResponse({"error": str(e)}, status=500)
+
+    query = "SELECT id, name, create_time, address FROM restaurant;"
+    data = run_query(query)
+    context = {"data": data}
+    return render(request, "restaurant.html", context)
 
 
 def UserView(request):
