@@ -16,7 +16,7 @@ CREATE TABLE food
 INSERT INTO food
     (name, price, description, image, category_id)
 VALUES
-    ('Cheeseburger', 89000, 'Juicy beef patty topped with melted cheese, lettuce, tomato, and pickles, served on a sesame seed bun.', 'cheeseburger.jpg', 2),
+    ('Cheeseburger', 89000, 'Juicy beef patty topped with melted cheese, and pickles, served on a sesame seed bun.', 'cheeseburger.jpg', 2),
     ('Margherita Pizza', 10900, 'Classic pizza topped with fresh tomato sauce, mozzarella cheese, and basil leaves.', 'margherita_pizza.jpg', 2),
     ('Caesar Salad', 74000, 'Crisp romaine lettuce tossed with Caesar dressing, croutons, and Parmesan cheese.', 'caesar_salad.jpg', 1),
     ('Chocolate Brownie', 59900, 'Rich and fudgy chocolate brownie served warm with a scoop of vanilla ice cream.', 'chocolate_brownie.jpg', 3),

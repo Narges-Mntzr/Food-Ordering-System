@@ -67,7 +67,6 @@ def category_view(request):
 @csrf_protect
 def discount_view(request):
     if request.method == "POST":
-        print("sssssssssssssss")
         data = request.POST
 
         amount = data.get("amount")
@@ -108,3 +107,35 @@ def discount_view(request):
         "available_data": json.dumps(formatted_available_data),
     }
     return render(request, "discount.html", context)
+
+
+def food_view(request):
+    if request.method == "POST":
+        data = request.POST
+
+        name = data.get("name")
+        price = data.get("price")
+        category = data.get("category")
+        description = data.get("description")
+        image = data.get("image")
+
+        print(category)
+        try:
+            run_query(
+                """
+                INSERT INTO food (name, price, description, image, category_id)
+                VALUES (%s, %s, %s, %s, %s)
+            """,
+                [name, price, description, image, category],
+            )
+        except Exception as e:
+            return JsonResponse({"error": str(e)}, status=500)
+
+    query = "SELECT f.id, f.name, price, c.name, description, image FROM food f JOIN category c ON (f.category_id=c.id)"
+    data = run_query(query)
+
+    query = "SELECT id,name FROM category"
+    categories = run_query(query)
+
+    context = {"data": data, "categories": categories}
+    return render(request, "food.html", context)
