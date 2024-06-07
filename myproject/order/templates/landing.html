@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Panel{% endblock %}
+
+{% block bodyHeader %}
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto">
+            <h1 class="text-2xl font-semibold">Admin Panel</h1>
+            <a href="" class="block text-l font-semibold text-white">
+                <!-- #TODO: add main page url -->
+                ABOUT US
+            </a>
+        </div>
+    </header>
+{% endblock %}
+
+{% block content %}
+<div class="text-center">
+    <h2 class="mb-5 mt-5 font-semibold">Welcome to Food Ordering App</h1>
+    <div class="btn-container">
+        <div class="btn-wrapper">
+            <a href="{% url 'order:address' %}" class="btn btn-primary btn-custom ">Addresses</a>
+        </div>
+        <div class="btn-wrapper">
+            <a href="{% url 'order:category' %}" class="btn btn-success btn-custom">Categories</a>
+        </div>
+        <div class="btn-wrapper">
+            <a href="{% url 'order:discount' %}" class="btn btn-info btn-custom">Discounts</a>
+        </div>
+        <div class="btn-wrapper">
+            <a href="{% url 'order:food' %}" class="btn btn-primary btn-custom">Food</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block bodyFooter %}
+{% endblock %}

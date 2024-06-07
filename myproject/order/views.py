@@ -1,11 +1,14 @@
 import json
+
 from datetime import datetime
+from django.http import JsonResponse
+from django.shortcuts import render
 
 from .services import run_query
 
-from django.shortcuts import render
-from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_protect
+
+def landing_view(request):
+    return render(request, "landing.html")
 
 
 def address_view(request):
@@ -64,7 +67,6 @@ def category_view(request):
     return render(request, "category.html", context)
 
 
-@csrf_protect
 def discount_view(request):
     if request.method == "POST":
         data = request.POST
