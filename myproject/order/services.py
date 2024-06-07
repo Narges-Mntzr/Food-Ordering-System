@@ -1,5 +1,6 @@
-from django.db import connection
+import hashlib
 
+from django.db import connection
 
 def run_query(query, params=[]):
     result = None
@@ -11,3 +12,6 @@ def run_query(query, params=[]):
             result = cursor.fetchall()
 
     return result
+
+def sha256(data):
+    return hashlib.sha256(data.encode('utf-8')).hexdigest()[:16]

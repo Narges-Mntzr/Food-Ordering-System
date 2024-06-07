@@ -9,4 +9,5 @@ urlpatterns = [
     path("category/", views.CategoryView, name="category"),
     path("discount/", views.DiscountView, name="discount"),
     path("food/", views.FoodView, name="food"),
+    path("user/", views.UserView, name="user"),
 ]

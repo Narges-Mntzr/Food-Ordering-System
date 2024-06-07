@@ -4,7 +4,7 @@ from datetime import datetime
 from django.http import JsonResponse
 from django.shortcuts import render
 
-from .services import run_query
+from .services import run_query, sha256
 
 
 def LandingView(request):
@@ -141,3 +141,32 @@ def FoodView(request):
 
     context = {"data": data, "categories": categories}
     return render(request, "food.html", context)
+
+
+def UserView(request):
+    if request.method == "POST":
+        data = request.POST
+
+        name = data.get("name")
+        password = data.get("password")
+        phone_num = data.get("phone_num")
+        email = data.get("email")
+        identify_code = data.get("identify_code")
+
+        password_hash = sha256(password)
+
+        try:
+            run_query(
+                """
+                INSERT INTO users (name, password, phone_num, email, identify_code)
+                VALUES (%s, %s, %s, %s, %s)
+            """,
+                [name, password_hash, phone_num, email, identify_code],
+            )
+        except Exception as e:
+            return JsonResponse({"error": str(e)}, status=500)
+
+    query = "SELECT id, name, password, phone_num, email, identify_code FROM users"
+    data = run_query(query)
+    context = {"data": data}
+    return render(request, "user.html", context)
