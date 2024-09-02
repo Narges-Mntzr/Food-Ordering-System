@@ -24,7 +24,7 @@ This repository contains the source code and related files for a **Food Ordering
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/Narges-Mntzr/food-ordering-system.git
+   git clone https://github.com/Narges-Mntzr/Food-Ordering-System.git
    ```
 2. Navigate to the project directory:
    ```bash
