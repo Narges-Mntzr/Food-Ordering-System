@@ -51,3 +51,8 @@ This repository contains the source code and related files for a **Food Ordering
 
 - Access the application at `http://localhost:8000/`.
 - The admin panel is accessible at `http://localhost:8000/admin/`.
+
+### Collaborators:
+**Narges Montazeri:** Email: Narges.montazeri81@gmail.com , Github: [Narges-Mntzr](https://github.com/Narges-Mntzr).<br />
+**Shirin Behnami nia:** Email: hhagh2002@gmail.com , Github: [shirinbehnami](https://github.com/shirinbehnami).<br />
+**Parto Sabzevari:** Github: [sabzparto](https://github.com/sabzparto).<br /><br /><br />
